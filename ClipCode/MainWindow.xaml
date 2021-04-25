@@ -19,7 +19,7 @@
                     <MenuItem x:Name="MenuScan" Header="Scan Clipboard" Click="MenuScan_OnClick" />
                     <MenuItem Header="Settings" IsEnabled="False" />
                     <MenuItem Header="About" />
-                    <MenuItem Header="Quit" />
+                    <MenuItem x:Name="MenuQuit" Header="Quit" Click="MenuQuit_OnClick" />
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>

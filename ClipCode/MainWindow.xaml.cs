@@ -21,9 +21,9 @@ namespace ClipCode
       Visibility = Visibility.Hidden;
     }
 
-    public static Bitmap BitmapSourceToBitmap(BitmapSource source)
+    public static Bitmap? BitmapSourceToBitmap(BitmapSource? source)
     {
-      if (source == null)
+      if (source is null)
         return null;
 
       var pixelFormat = PixelFormat.Format32bppArgb; //Bgr32 equiv default
@@ -86,6 +86,11 @@ namespace ClipCode
     private void MenuScan_OnClick(object sender, RoutedEventArgs e)
     {
       ScanClipboard();
+    }
+
+    private void MenuQuit_OnClick(object sender, RoutedEventArgs e)
+    {
+      Close();
     }
   }
 }
