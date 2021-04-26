@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace ClipCode
 {
@@ -16,6 +17,14 @@ namespace ClipCode
     protected override void OnStartup(StartupEventArgs e)
     {
       base.OnStartup(e);
+      
+      AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+    }
+
+    private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+    {
+      string errorMessage = $"An unhandled exception occurred: {(e.ExceptionObject as Exception)?.Message}";
+      MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
     }
   }
 }

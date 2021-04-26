@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hardcodet.Wpf.TaskbarNotification;
-using IronBarCode;
+using ZXing;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Point = System.Drawing.Point;
 
@@ -64,18 +64,17 @@ namespace ClipCode
 
       var clipboardBitmap = BitmapSourceToBitmap(clipboardBitmapSource);
 
-      var barcodeResult = BarcodeReader.ReadASingleBarcode(
-        clipboardBitmap,
-        RotationCorrection: BarcodeReader.BarcodeRotationCorrection.Low);
+      var barcodeResult = new BarcodeReader().Decode(clipboardBitmap);
 
-      if (string.IsNullOrEmpty(barcodeResult?.Value))
+      var barcodeResultText = barcodeResult?.Text;
+      if (string.IsNullOrEmpty(barcodeResultText))
       {
         TrayIcon.ShowBalloonTip("", "Couldn't recognize Barcode", BalloonIcon.Error);
         return;
       }
 
-      TrayIcon.ShowBalloonTip("Success", "Value: '" + barcodeResult.Text + "' has been copied.", BalloonIcon.None);
-      Clipboard.SetText(barcodeResult.Text);
+      TrayIcon.ShowBalloonTip("Success", "Value: '" + barcodeResultText + "' has been copied.", BalloonIcon.None);
+      Clipboard.SetText(barcodeResultText);
     }
 
     private void TrayIcon_OnTrayMouseDoubleClick(object sender, RoutedEventArgs e)
